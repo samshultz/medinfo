@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+
+{% block title %}
+	Medical Info - Signup
+{% endblock title %}
+	
+{% block content %}
+    
+<div class="col-sm-offset-3 col-sm-6 well">
+		{% if form.errors %}
+			<div class="alert alert-danger">
+				{{ form.errors }}
+			</div>	
+		{% endif %}
+		<form action="" method="post" accept-charset="utf-8">
+			{% csrf_token %}
+		  <div class="form-group">
+			<label for="username">Username</label>
+			<input type="text" class="form-control" id="username" placeholder="Username" name="username">
+		  </div>
+		  <div>
+			<div class="form-group col-sm-6">
+			  <label for="first_name">First name</label>
+			  <input type="text" class="form-control" id="first_name" placeholder="First name" name="first_name">
+			</div>
+			<div class="form-group col-sm-6">
+			  <label for="last_Name">Last name</label>
+			  <input type="text" class="form-control" id="last_name" placeholder="Last name" name="last_name">
+			</div>
+		  </div>
+		  <div class="form-group">
+			<label for="email">Email</label>
+			<input type="email" class="form-control" id="email" placeholder="Email address" name="email">
+		  </div>
+		  <div class="form-group">
+			<label for="password1">Password</label>
+			<input type="password" class="form-control" id="password1" placeholder="Password" name="password1">
+		  </div>
+		  <div class="form-group">
+			<label for="password2">Confirm Password</label>
+			<input type="password" class="form-control" id="password2" placeholder="Confirm password" name="password2">
+		  </div>
+			
+			<p>Already have an account? <a href="{% url 'login' %}">click here to login</a></p>
+		  <input type="submit" class="btn btn-info btn-lg btn-block" value="Register">
+		
+		</form> 
+	   </div>
+{% endblock content %}

@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    All users medical info
+{% endblock title %}
+
+{% block content %}
+<div class="panel panel-primary">
+  <div class="panel-heading">Users Medical Info</div>
+  <div class="panel-body">
+    <div class="dropdown pull-right">
+        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+            Filter Users
+            <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+            <li><a href="{% url 'account:user_list' %}">All</a></li>
+            <li><a href="?type=medication">On medication</a></li>
+            <li><a href="?type=surgery">Has had Surgery</a></li>
+            <li><a href="?type=illness">Has Major Illness</a></li>
+            <li><a href="?type=blood_born_diseases">Blood Born Diseases(e.g HIV, AIDS, Hep. B)</a></li>
+            
+        </ul>
+    </div><br>
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+        {% if user_list %}
+            <tr>
+                <th>Full name</th>
+                <th>on medication?</th>
+                <th>allergies?</th>
+                <th>major illness?</th>
+            </tr>
+        {% else %}
+            <p class="center-block">No users available.</p>
+        {% endif %}
+          
+        </thead>
+        <tbody>
+        {% if user_list %}
+            {% for user in user_list %}
+                <tr>
+                    <td>{{ user.get_full_name }}</td>
+                    <td>{{ user.medical_info.medication|yesno:"yes,no" }}</td>
+                    <td>{{ user.medical_info.allergies|yesno:"yes,no" }}</td>
+                    <td>{{ user.medical_info.illness|yesno:"yes,no" }}</td>
+            </tr>
+            
+            {% endfor %}
+        {% endif %}
+        
+          
+        </tbody>
+      </table>
+    </div>
+</div>
+</div>
+    {% include "pagination.html" with page=page_obj %}
+{% endblock content %}
