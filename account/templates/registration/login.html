@@ -8,7 +8,7 @@
 {% block content %}
     
 	<div class="col-sm-offset-3 col-sm-6 well">
-		
+		<h3 class="text-center">Fill The Form Below to Login</h3>
 		{% if form.errors %}
 			<div class="alert alert-danger">
 				Your username and password didn't match.
@@ -27,8 +27,9 @@
 			</div>
 			<input type="hidden" name="next" value="{{ next }}" />
 			
-			<p>Don't have and account? <a href="{% url 'account:signup' %}">Click here to signup</a> </p>
+			<p>Don't have and account? <a href="{% url 'accounts:signup' %}">Click here to signup</a> </p>
 			<input type="submit" class="btn btn-info btn-lg btn-block" value="Login">
 		</form> 
+		<p class="text-center"><a href="{% url 'accounts:password_reset' %}">Forgotten your Password?</a></p>
 	</div>
 {% endblock content %}

@@ -8,14 +8,26 @@
 
 {% block content %}
     
+    <div class="row">
+        <div id="allergies" class="col-xs-12 col-sm-12 col-md-4">{{ allergies_chart|safe }}</div>
+        <div id="different_conditions" class="col-xs-12 col-sm-12 col-md-8">{{ different_conditons_chart|safe }}</div>
+        
+    </div>
+    
+    <br>
+    <br>
+    <div class="row">
+
+        <div id="illness" class="col-xs-12 col-md-12">{{ major_illness_chart|safe }}</div>
+        
+    </div>
+    
 {% endblock content %}
 
 
-{% block extra_js %}
+{% block extra-js %}
 {% load static %}
-// Include FusionCharts core file
-<script type="text/javascript" src="http://cdn.fusioncharts.com/fusioncharts/latest/fusioncharts.js"></script>
-// Include FusionCharts Theme file
-<script type="text/javascript" src="http://cdn.fusioncharts.com/fusioncharts/latest/themes/fusioncharts.theme.fusion.js"></script>
-{% endblock extra_js %}
+<script type="text/javascript" src="//cdn.fusioncharts.com/fusioncharts/latest/fusioncharts.js"></script>
+   <script type="text/javascript" src="//cdn.fusioncharts.com/fusioncharts/latest/themes/fusioncharts.theme.fusion.js"></script>
+{% endblock extra-js %}
     

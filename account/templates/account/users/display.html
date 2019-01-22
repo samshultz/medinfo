@@ -11,7 +11,7 @@
             {% csrf_token %}
         <div>
         {% for field in user_form %}
-            <div class="form-group col-sm-4">
+            <div class="form-group col-sm-12 col-md-4">
                 {{ field.label_tag }}
                 <input type="text" class="form-control" id="{{ field.id_for_label }}" placeholder="{{ field.label }}" name="{{ field.name }}" value="{{ field.value }}">
             </div>
@@ -21,37 +21,38 @@
 
         <div>
             {% for field in profile_form %}
-                {% if field.label != "Address" %}
-                    <div class="form-group col-sm-4">
-                        {{ field.label_tag }}
-                        <input type="text" class="form-control" id="{{ field.id_for_label }}" placeholder="{{ field.label }}" name="{{ field.name }}" value="{{ field.value }}">
-                    </div>
+                {% if not field.is_hidden %}
+                    {% if field.label != "Address" %}
+                        <div class="form-group col-sm-12 col-md-4">
+                            {{ field.label_tag }}
+                            <input type="text" class="form-control" id="{{ field.id_for_label }}" placeholder="{{ field.label }}" name="{{ field.name }}" value="{{ field.value }}">
+                            
+                            {% if field.label == 'Date of birth' %}
+                                <span id="helpBlock" class="help-block">year must be in the format: <b>yyyy-mm-dd</b></span>
+                            {% endif %}
+                                
+                        </div>
+                    {% else %}
+                        
+                        <div class="form-group col-sm-12 col-md-6">
+                            {{ field.label_tag }}
+                            <textarea class="form-control" rows="3" name="{{ field.name }}" id="{{ field.id_for_label }}">{{ field.value }}</textarea>
+                        </div>
+                        
+                    {% endif %}
                 {% else %}
-                    
-                    <div class="form-group col-sm-6">
-                        {{ field.label_tag }}
-                        <textarea class="form-control" rows="3" name="{{ field.name }}" id="{{ field.id_for_label }}">{{ field.value }}</textarea>
-                    </div>
-                    
+                    <input type="hidden" name="{{ field.name }}" value="{{ field.value }}" id="{{ field.id_for_label }}">
                 {% endif %}
                 
             {% endfor %}
             
         </div>
-            
-        </div>
+        
         <br>
-        <div>
+        <div><br>
             <h3>Medical Information</h3>
             <hr>
-            {% for field in med_form %}
-                <div class="checkbox">
-                    <label>
-                        <input type="checkbox" id="{{ field.id_for_label }}" name="{{ field.name }}" {% if field.value %}checked=""{% endif %}> {{ field.label }}
-                    </label>
-                </div>
-            {% endfor %}
-        
+            {{ med_form.as_p }}
         </div>
         
         <button type="submit" class="btn btn-success pull-right">Save Changes</button>

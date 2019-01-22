@@ -27,20 +27,20 @@ class MedicalInfo(models.Model):
     patient = models.OneToOneField(settings.AUTH_USER_MODEL, 
                                    on_delete=models.CASCADE, 
                                    related_name="medical_info")
-    surgery = models.BooleanField("Any surgery within the last five years", default=False)
-    allergies = models.BooleanField("Allergies(including massage oils)", default=False)
-    epilepsy = models.BooleanField(default=False)
-    pacemaker = models.BooleanField("Any metal pins or plates as a result of surgery", default=False)
-    circulatory_problems = models.BooleanField("Any circulatory problems, Thrombosis etc)", default=False)
-    illness = models.BooleanField("Major Illness/ injury", default=False)
-    liver_kidney_ailments = models.BooleanField("Liver/Kidney ailments", default=False)
+    surgery = models.BooleanField("Any surgery within the last five years", default=False, blank=True)
+    allergies = models.BooleanField("Allergies(including massage oils)", default=False, blank=True)
+    epilepsy = models.BooleanField(default=False, blank=True)
+    pacemaker = models.BooleanField("Any metal pins or plates as a result of surgery", default=False, blank=True)
+    circulatory_problems = models.BooleanField("Any circulatory problems, Thrombosis etc)", default=False, blank=True)
+    illness = models.BooleanField("Major Illness/ injury", default=False, blank=True)
+    liver_kidney_ailments = models.BooleanField("Liver/Kidney ailments", default=False, blank=True)
     medication = models.BooleanField("Are you currently taking any form of"
-                                     "medication(including Homeopathic remedies", default=False)
-    back_pains = models.BooleanField("Back pains", default=False)
-    nervous_disorders = models.BooleanField("Nervous disorders", default=False)
-    blood_born_diseases = models.BooleanField("Blood born diseases (Hep B, AIDS, HIV)", default=False)
-    reduced_reflexes = models.BooleanField("Reduced reflexes(if known)", default=False)
-    broken_capillaries = models.BooleanField("Broken capillaries", default=False)
+                                     "medication(including Homeopathic remedies", default=False, blank=True)
+    back_pains = models.BooleanField("Back pains", default=False, blank=True)
+    nervous_disorders = models.BooleanField("Nervous disorders", default=False, blank=True)
+    blood_born_diseases = models.BooleanField("Blood born diseases (Hep B, AIDS, HIV)", default=False, blank=True)
+    reduced_reflexes = models.BooleanField("Reduced reflexes(if known)", default=False, blank=True)
+    broken_capillaries = models.BooleanField("Broken capillaries", default=False, blank=True)
 
     def __str__(self):
         return "{} {}".format(self.patient.first_name, self.patient.last_name)

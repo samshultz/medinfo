@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+
+{% block title %}
+    Medical Info - Logged out
+{% endblock title %}
+
+
+{% block content %}
+    <h1 class="text-center">Logged out</h1>
+    <hr>
+    <p>You have been successfully logged out. You can <a href="{% url 'accounts:login' %}">log-in again</a>.</p>
+{% endblock content %}
+    
+    
