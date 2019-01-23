@@ -23,7 +23,7 @@ from .utils import chart_config, map_data_to_dict
 class UserRegistrationView(FormView):
     template_name = 'registration/registration.html'
     form_class = UserRegistrationForm
-    success_url = reverse_lazy('accounts:user_detail')
+    success_url = reverse_lazy('user_detail')
     
 
     def form_valid(self, form):
@@ -34,7 +34,7 @@ class UserRegistrationView(FormView):
         user = authenticate(username=username, password=raw_password)
         login(self.request, user)
         
-        return redirect("accounts:user_detail") 
+        return redirect("user_detail") 
 
 
 class UserListView(LoginRequiredMixin, ListView):
@@ -63,8 +63,7 @@ def user_detail_edit_view(request):
     med_form = None
     user_form = None
     profile_form = None
-    med_info = MedicalInfo.objects.get(patient=request.user)
-    user = get_object_or_404(User, id=request.user.id)
+
     if request.method == "POST":
         
         med_form = MedicalInfoForm(instance=request.user.medical_info, data=request.POST)
@@ -78,12 +77,10 @@ def user_detail_edit_view(request):
             profile_form.save()
     else:
         med_form = MedicalInfoForm(instance=request.user.medical_info)
-        print(request.user.medical_info.circulatory_problems)
         user_form = UserEditForm(instance=request.user)
         profile_form = ProfileEditForm(instance=request.user.profile)
 
     return render(request, 'account/users/display.html', {'med_form': med_form, 
-                                                          'user':user,
                                                           'profile_form': profile_form,
                                                           'user_form': user_form})
 

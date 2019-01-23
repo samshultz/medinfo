@@ -19,6 +19,7 @@
         body {
           background: #f1f1f1;
         }
+        
       </style>
 </head>
 <body>
@@ -33,7 +34,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="{% url 'accounts:user_detail' %}">MedInfo</a>
+      <a class="navbar-brand" href="{% url 'user_detail' %}">MedInfo</a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
@@ -42,11 +43,11 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           {% if request.user.is_authenticated %}
       <ul class="nav navbar-nav">
-        <li {% if menu == "home" %}class="active"{% endif %}><a href="{% url 'accounts:user_detail' %}">Medical Data <span class="sr-only">(current)</span></a></li>
+        <li {% if menu == "home" %}class="active"{% endif %}><a href="{% url 'user_detail' %}">Medical Data <span class="sr-only">(current)</span></a></li>
         
         {% if request.user.profile.is_doctor %}
-            <li {% if menu == "statistics" %}class="active"{% endif %}><a href="{% url 'accounts:user_statistics' %}">Statistical Data</a></li>
-            <li {% if menu == "users" %}class="active"{% endif %}><a href="{% url 'accounts:user_list' %}">View all users</a></li>
+            <li {% if menu == "statistics" %}class="active"{% endif %}><a href="{% url 'user_statistics' %}">Statistical Data</a></li>
+            <li {% if menu == "users" %}class="active"{% endif %}><a href="{% url 'user_list' %}">View all users</a></li>
         {% endif %}
             
         
@@ -56,11 +57,12 @@
       <ul class="nav navbar-nav navbar-right">
         
         {% if not request.user.is_authenticated %}
-          <li><a href="{% url 'accounts:login' %}">Login</a></li>
+          <li><a href="{% url 'login' %}">Login</a></li>
         {% endif %}
         
         {% if request.user.is_authenticated %}
-          <li><a href="{% url 'accounts:logout' %}">Logout</a></li>
+          <li><a href="{% url 'logout' %}">Logout</a></li>
+          <li><a href="{% url 'password_change' %}">Change your password</a></li>
         {% endif %}
          
       </ul>

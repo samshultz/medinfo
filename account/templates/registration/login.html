@@ -27,9 +27,9 @@
 			</div>
 			<input type="hidden" name="next" value="{{ next }}" />
 			
-			<p>Don't have and account? <a href="{% url 'accounts:signup' %}">Click here to signup</a> </p>
+			<p>Don't have and account? <a href="{% url 'signup' %}">Click here to signup</a> </p>
 			<input type="submit" class="btn btn-info btn-lg btn-block" value="Login">
 		</form> 
-		<p class="text-center"><a href="{% url 'accounts:password_reset' %}">Forgotten your Password?</a></p>
+		<p class="text-center"><a href="{% url 'password_reset' %}">Forgotten your Password?</a></p>
 	</div>
 {% endblock content %}

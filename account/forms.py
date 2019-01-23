@@ -20,16 +20,10 @@ class UserEditForm(forms.ModelForm):
 class ProfileEditForm(forms.ModelForm):
     class Meta:
         model = Profile
-        exclude = 'is_doctor',
-        widgets = {
-            'user': forms.HiddenInput(),
-        }
-
+        exclude = ['user', 'is_doctor']
+        
 
 class MedicalInfoForm(forms.ModelForm):
     class Meta:
         model = MedicalInfo
-        fields = '__all__'
-        widgets = {
-            'patient': forms.HiddenInput(),
-        }
+        exclude = 'patient',

@@ -34,8 +34,8 @@ class MedicalInfo(models.Model):
     circulatory_problems = models.BooleanField("Any circulatory problems, Thrombosis etc)", default=False, blank=True)
     illness = models.BooleanField("Major Illness/ injury", default=False, blank=True)
     liver_kidney_ailments = models.BooleanField("Liver/Kidney ailments", default=False, blank=True)
-    medication = models.BooleanField("Are you currently taking any form of"
-                                     "medication(including Homeopathic remedies", default=False, blank=True)
+    medication = models.BooleanField("Are you currently taking any form of "
+                                     "medication (including Homeopathic remedies)", default=False, blank=True)
     back_pains = models.BooleanField("Back pains", default=False, blank=True)
     nervous_disorders = models.BooleanField("Nervous disorders", default=False, blank=True)
     blood_born_diseases = models.BooleanField("Blood born diseases (Hep B, AIDS, HIV)", default=False, blank=True)

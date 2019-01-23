@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 
+{% load widget_tweaks %}
+
 {% block title %}
     {{ request.user.get_full_name }}'s medical info view
 {% endblock title %}
@@ -7,54 +9,66 @@
 {% block content %}
         <h3>Personal Information</h3>
         <hr>
-        <form action="" method="post">
+        <form action="." method="post">
             {% csrf_token %}
-        <div>
-        {% for field in user_form %}
-            <div class="form-group col-sm-12 col-md-4">
-                {{ field.label_tag }}
-                <input type="text" class="form-control" id="{{ field.id_for_label }}" placeholder="{{ field.label }}" name="{{ field.name }}" value="{{ field.value }}">
-            </div>
-        {% endfor %}
-           
-        </div>
-
-        <div>
-            {% for field in profile_form %}
-                {% if not field.is_hidden %}
-                    {% if field.label != "Address" %}
-                        <div class="form-group col-sm-12 col-md-4">
-                            {{ field.label_tag }}
-                            <input type="text" class="form-control" id="{{ field.id_for_label }}" placeholder="{{ field.label }}" name="{{ field.name }}" value="{{ field.value }}">
-                            
-                            {% if field.label == 'Date of birth' %}
-                                <span id="helpBlock" class="help-block">year must be in the format: <b>yyyy-mm-dd</b></span>
-                            {% endif %}
-                                
-                        </div>
-                    {% else %}
-                        
-                        <div class="form-group col-sm-12 col-md-6">
-                            {{ field.label_tag }}
-                            <textarea class="form-control" rows="3" name="{{ field.name }}" id="{{ field.id_for_label }}">{{ field.value }}</textarea>
-                        </div>
-                        
-                    {% endif %}
-                {% else %}
-                    <input type="hidden" name="{{ field.name }}" value="{{ field.value }}" id="{{ field.id_for_label }}">
-                {% endif %}
-                
+            <!-- UserForm rendering -->
+            {% for field in user_form.hidden_fields %}
+                {{ field }}
             {% endfor %}
             
-        </div>
-        
-        <br>
-        <div><br>
-            <h3>Medical Information</h3>
-            <hr>
-            {{ med_form.as_p }}
-        </div>
-        
-        <button type="submit" class="btn btn-success pull-right">Save Changes</button>
+            <div>
+                {% for field in user_form.visible_fields %}
+                    <div class="form-group col-sm-4">
+                        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                            {{ field|add_class:"form-control" }}
+                            {% for error in field.errors %}
+                                <span class="help-block">{{ error }}</span>
+                            {% endfor %}
+                    </div>
+                {% endfor %}
+            </div>
+            <!-- / UserForm rendering -->
+           <!-- ProfileForm rendering -->
+                
+                {% for field in profile_form.hidden_fields %}
+                    {{ field }}
+                {% endfor %}
+                
+                <div>
+                    {% for field in profile_form.visible_fields %}
+                    
+                        {% if field.label != "Address" %}
+                            <div class="form-group col-sm-12 col-md-4">
+                                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                                    {{ field|add_class:"form-control" }}
+                                    {% for error in field.errors %}
+                                        <span class="help-block">{{ error }}</span>
+                                    {% endfor %}
+                            </div>
+                        {% else %}
+                            <div class="form-group">
+                                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                                {{ field|add_class:"form-control" }}
+                            </div>
+                            
+                        {% endif %}
+                    {% endfor %}
+                </div>
+           <!-- / ProfileForm rendering -->
+                
+                <!-- MedicalForm rendering -->
+                <div>
+                    <hr>
+                    <h3>Medical Information</h3>
+                    <p><strong>Do you have/Have you had</strong> and of the following:</p>
+                    <hr>
+                    {{ med_form.as_p }}
+                </div>
+                <!-- / MedicalForm rendering -->
+            <div class="form-group">
+                <button type="submit" class="btn btn-success pull-right">Save Changes</button>
+                <br><br>
+            </div>      
+            
     </form>
 {% endblock content %}
