@@ -7,6 +7,20 @@
 {% endblock title %}
 
 {% block content %}
+        
+        {% if messages %}
+            
+            {% for msg in messages %}
+                <div class="alert alert-{{ msg.tags }} alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <p class="text-center">{{ msg|safe }}</p>
+                </div>
+            {% endfor %}
+                
+        {% endif %}
+            
         <h3>Personal Information</h3>
         <hr>
         <form action="." method="post">
@@ -21,9 +35,14 @@
                     <div class="form-group col-sm-4">
                         <label for="{{ field.id_for_label }}">{{ field.label }}</label>
                             {{ field|add_class:"form-control" }}
-                            {% for error in field.errors %}
-                                <span class="help-block">{{ error }}</span>
-                            {% endfor %}
+                                
+                            {% if field.errors %}
+                                {% for error in field.errors %}
+                                    <span class="help-block">{{ error }}</span>
+                                {% endfor %}
+                            {% endif %}
+                                
+                            
                     </div>
                 {% endfor %}
             </div>
@@ -40,12 +59,16 @@
                         {% if field.label != "Address" %}
                             <div class="form-group col-sm-12 col-md-4">
                                 <label for="{{ field.id_for_label }}">{{ field.label }}</label>
-                                    {{ field|add_class:"form-control" }}
+                                {{ field|add_class:"form-control" }}
+
+                                {% if field.errors %}
                                     {% for error in field.errors %}
                                         <span class="help-block">{{ error }}</span>
                                     {% endfor %}
+                                {% endif %}
                             </div>
                         {% else %}
+                        
                             <div class="form-group">
                                 <label for="{{ field.id_for_label }}">{{ field.label }}</label>
                                 {{ field|add_class:"form-control" }}
@@ -59,7 +82,7 @@
                 <!-- MedicalForm rendering -->
                 <div>
                     <hr>
-                    <h3>Medical Information</h3>
+                    <h2>Medical Information</h2>
                     <p><strong>Do you have/Have you had</strong> and of the following:</p>
                     <hr>
                     {{ med_form.as_p }}

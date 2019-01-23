@@ -21,6 +21,9 @@ class ProfileEditForm(forms.ModelForm):
     class Meta:
         model = Profile
         exclude = ['user', 'is_doctor']
+        help_texts = {
+            'date_of_birth': 'format: Year-Month-Day',
+        }
         
 
 class MedicalInfoForm(forms.ModelForm):

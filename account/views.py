@@ -5,7 +5,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 
 from django.contrib.auth import authenticate, login
-
+from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
@@ -33,8 +33,8 @@ class UserRegistrationView(FormView):
         raw_password = form.cleaned_data.get('password1')
         user = authenticate(username=username, password=raw_password)
         login(self.request, user)
-        
-        return redirect("user_detail") 
+
+        return super(UserRegistrationView, self).form_valid(form)
 
 
 class UserListView(LoginRequiredMixin, ListView):
@@ -45,24 +45,22 @@ class UserListView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         queryset = super(UserListView, self).get_queryset()
-        user_type = self.request.GET.get('type')
-        if user_type:
-            if user_type == 'medication':
+        condition = self.request.GET.get('type')
+        if condition:
+            if condition == 'medication':
                 queryset = queryset.filter(medical_info__medication=True)
-            elif user_type == 'surgery':
+            elif condition == 'surgery':
                 queryset = queryset.filter(medical_info__surgery=True)
-            elif user_type == 'illness':
+            elif condition == 'illness':
                 queryset = queryset.filter(medical_info__illness=True)
-            elif user_type == 'blood_born_diseases':
+            elif condition == 'blood_born_diseases':
                 queryset = queryset.filter(medical_info__blood_born_diseases=True)
 
         return queryset
 
 @login_required
 def user_detail_edit_view(request):
-    med_form = None
-    user_form = None
-    profile_form = None
+    med_form = user_form = profile_form = None
 
     if request.method == "POST":
         
@@ -75,6 +73,9 @@ def user_detail_edit_view(request):
             med_form.save()
             user_form.save()
             profile_form.save()
+            messages.success(request, 'Your Information was updated successfully')
+        else:
+            messages.error(request, 'Error Updating your info, Please Try again.')
     else:
         med_form = MedicalInfoForm(instance=request.user.medical_info)
         user_form = UserEditForm(instance=request.user)
@@ -84,7 +85,7 @@ def user_detail_edit_view(request):
                                                           'profile_form': profile_form,
                                                           'user_form': user_form})
 
-
+@login_required
 def statistical_details(request):
 
     # The `chartConfig` dict contains key-value pairs of data for chart attribute
@@ -121,6 +122,6 @@ def statistical_details(request):
                    'account/users/statistical_details.html', 
                    {'allergies_chart' : allergies_chart.render(),
                     'major_illness_chart': major_illness_chart.render(),
-                    'different_conditons_chart': different_conditons_chart.render(),
+                    'different_conditions_chart': different_conditons_chart.render(),
                     }
                   )

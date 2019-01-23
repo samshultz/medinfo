@@ -9,7 +9,7 @@ urlpatterns = [
     url(r'^users/list/$', views.UserListView.as_view(), name="user_list"),
     url(r'^user/statistics/$', views.statistical_details, name="user_statistics"),
 
-    url(r'^login/$', auth_views.login, name="login"),
+    url(r'^accounts/login/$', auth_views.login, name="login"),
     url(r'^logout/$', auth_views.logout, name='logout'),
     
     # change password urls

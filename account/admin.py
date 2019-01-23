@@ -7,6 +7,7 @@ class ProfileAdmin(admin.ModelAdmin):
     list_display = "user", "occupation", "telephone", "address", "is_doctor"
     list_filter = "is_doctor", "occupation"
     readonly_fields = "user",
+    list_editable = "is_doctor",
 
 
 @admin.register(MedicalInfo)
